@@ -16,5 +16,5 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          whoami
-          ls -la
+          cd gh-actions/mailer-api
+          git pull origin main
