@@ -16,5 +16,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          cd gh-actions/mailer-api
+          cd ~/gh-actions/mailer-api
           git pull origin main
+          docker build -t mailer-img .
+          docker run -dp 80:3000 mailer-img:latest
