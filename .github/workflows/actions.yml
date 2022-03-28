@@ -19,6 +19,7 @@ jobs:
           cd ~/gh-actions/mailer-api
           git fetch origin main
           git pull origin main
-          docker rm -f $(docker ps -aq)
-          docker build -t mailer-img .
-          docker run --name mailer-api -dp 80:3000 mailer-img:latest
+          docker-compose up -d --build
+          # docker rm -f $(docker ps -aq)
+          # docker build -t mailer-img .
+          # docker run --name mailer-api -dp 80:3000 mailer-img:latest

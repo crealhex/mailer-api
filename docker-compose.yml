@@ -1,0 +1,45 @@
+version: '3.3'
+
+services:
+
+  mailer-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      env_file: .env
+    container_name: mailer
+    ports:
+      - 80:3000
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:4.4
+    container_name: mongodb
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-vol:/data/db
+      - mongodb-vol:/data/configdb
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - mongo
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongo
+
+volumes:
+  mongodb-vol:
+
+networks:
+  mailer-net:
